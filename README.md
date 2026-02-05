@@ -21,11 +21,13 @@ The Engelsystem may be installed manually by uploading files to a web hoster or 
      * json
      * mbstring
      * PDO
-       * mysql
+       * mysql or sqlite
      * tokenizer
      * xml/libxml/SimpleXML
      * xmlwriter
- * MySQL-Server >= 5.7.8 or MariaDB-Server >= 10.7
+ * Database:
+   * Local SQLite file database (recommended for simple/local setups)
+   * or MySQL-Server >= 5.7.8 / MariaDB-Server >= 10.7
  * Webserver, i.e. nginx, lighttpd, or Apache
 
 From previous experience, 2 cores and 2GB ram are roughly enough for up to 1000 Helpers (~700 arrived + 500 arrived but not working) during an event.
@@ -40,11 +42,23 @@ From previous experience, 2 cores and 2GB ram are roughly enough for up to 1000 
  * The webserver must read the `.htaccess` file and `mod_rewrite` must be enabled
 
  * Recommended: Directory Listing should be disabled.
- * There must be a MySQL database set up with a user who has full rights to that database.
+ * You need a configured database, either:
+   * a local SQLite file database, or
+   * a MySQL/MariaDB database with a user who has full rights to that database.
  * If necessary, create a `config/config.php` to override some configuration values.
     Using the web UI to change settings is recommended, you can find a documentation of possible settings in the
     [configuration documentation](https://engelsystem.de/doc/admin/configuration/index.html).
-   * A minimal `config.php` to connect to your database will be:
+   * A minimal `config.php` to use a local SQLite file database can be:
+      ```php
+      <?php
+      return [
+        'database' => [
+          'driver' => 'sqlite',
+          'database' => __DIR__ . '/../storage/engelsystem.sqlite',
+        ],
+      ];
+      ```
+   * A minimal `config.php` to connect to a MySQL/MariaDB database will be:
       ```php
       <?php
       return [
