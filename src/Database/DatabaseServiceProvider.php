@@ -25,7 +25,7 @@ class DatabaseServiceProvider extends ServiceProvider
         $now = Carbon::now($config->get('timezone'));
 
         $capsule->addConnection(array_merge([
-            'driver'    => 'mysql',
+            'driver'    => 'sqlite',
             'host'      => '',
             'database'  => '',
             'username'  => '',
